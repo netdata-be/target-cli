@@ -12,6 +12,8 @@ import (
 
 //var tfVars map[string]string
 
+var terraformHttpProxy string
+
 var terraformCmd = &cobra.Command{
 	Use:   "terraform",
 	Short: "Manage Terraform context profiles ",
@@ -52,6 +54,13 @@ var terraformSetDefaultCmd = &cobra.Command{
 			command := fmt.Sprintf("export TF_VAR_%s=%s", k, v)
 			exportCommandStr = append(exportCommandStr, command)
 
+		}
+
+		var shellCommandHttpProxy string
+		httpProxy := context.HttpProxy
+		if httpProxy != "" {
+			shellCommandHttpProxy = fmt.Sprintf("export HTTPS_PROXY=%s", httpProxy)
+			exportCommandStr = append(exportCommandStr, shellCommandHttpProxy)
 		}
 
 		commandStr := strings.Join(exportCommandStr, "; ")

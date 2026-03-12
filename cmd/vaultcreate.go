@@ -49,6 +49,7 @@ var vaultCreateCmd = &cobra.Command{
 			SvrLookup:        vaultSvrLookup,
 			Mfa:              vaultMfa,
 			HttpProxy:        vaultHttpProxy,
+			HttpsProxy:       vaultHttpsProxy,
 			DisableRedirects: vaultDisableRedirects,
 		}
 
@@ -89,6 +90,7 @@ func init() {
 	vaultCreateCmd.PersistentFlags().StringVar(&vaultSvrLookup, "svr-lookup", "", "Enables the client to lookup the host through DNS SRV look up")
 	vaultCreateCmd.PersistentFlags().StringVar(&vaultMfa, "mfa", "", "Set the MFA credentials in the format mfa_method_name[:key[=value]]")
 	vaultCreateCmd.PersistentFlags().StringVar(&vaultHttpProxy, "http=proxy", "", "Set the HTTP or HTTPS proxy location which should be used by all requests to access Vault")
+	vaultCreateCmd.PersistentFlags().StringVar(&vaultHttpsProxy, "https-proxy", "", "Set the HTTPS proxy location which should be used by all requests to access Vault")
 	vaultCreateCmd.PersistentFlags().StringVar(&vaultDisableRedirects, "disable-redirects", "", "Prevents the Vault client from following redirects")
 
 	vaultCreateCmd.MarkPersistentFlagRequired(

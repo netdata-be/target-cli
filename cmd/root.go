@@ -29,7 +29,8 @@ type Config struct {
 }
 
 type Terraform struct {
-	Vars map[string]string `json:"vars,omitempty" mapstructure:"vars"`
+	Vars      map[string]string `json:"vars,omitempty" mapstructure:"vars"`
+	HttpProxy string            `json:"http_proxy,omitempty" mapstructure:"http_proxy"`
 }
 
 type Boundary struct {
@@ -53,6 +54,7 @@ type Boundary struct {
 	LogLevel               string `json:"log_level,omitempty" mapstructure:"log_level"`
 	Format                 string `json:"format,omitempty" mapstructure:"format"`
 	ScopeId                string `json:"scope_id,omitempty" mapstructure:"scope_id"`
+	HttpProxy              string `json:"http_proxy,omitempty" mapstructure:"http_proxy"`
 }
 
 // Vault struct with flag parameters
@@ -97,6 +99,7 @@ type Consul struct {
 	ConsulKey       string `json:"key,omitempty" mapstructure:"key"`
 	ConsulTokenFile string `json:"token_file,omitempty" mapstructure:"token_file"`
 	ConsulNamespace string `json:"namespace,omitempty" mapstructure:"namespace"`
+	ConsulHttpProxy string `json:"http_proxy,omitempty" mapstructure:"http_proxy"`
 }
 
 // Nomad struct with flag parameters

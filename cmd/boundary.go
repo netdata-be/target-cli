@@ -25,6 +25,7 @@ var (
 	boundaryLogLevel               string
 	boundaryCliFormat              string
 	boundaryScopeId                string
+	boundaryHttpProxy              string
 )
 
 var boundaryCmd = &cobra.Command{

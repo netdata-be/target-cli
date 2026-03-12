@@ -46,6 +46,7 @@ var boundaryUpdateCmd = &cobra.Command{
 			LogLevel:               boundaryLogLevel,
 			Format:                 boundaryCliFormat,
 			ScopeId:                boundaryScopeId,
+			HttpProxy:              boundaryHttpProxy,
 		}
 
 		c.Boundary[args[0]] = b
@@ -81,5 +82,6 @@ func init() {
 	boundaryUpdateCmd.PersistentFlags().StringVar(&boundaryLogLevel, "log-level", "", "Set the log level")
 	boundaryUpdateCmd.PersistentFlags().StringVar(&boundaryCliFormat, "format", "", "Set the log output format")
 	boundaryUpdateCmd.PersistentFlags().StringVar(&boundaryScopeId, "scope-id", "", "Set the boundary scope id to run commands in")
+	boundaryUpdateCmd.PersistentFlags().StringVar(&boundaryHttpProxy, "http-proxy", "", "Set the HTTPS proxy location which should be used by all requests to access Boundary")
 
 }

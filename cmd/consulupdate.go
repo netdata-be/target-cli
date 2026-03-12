@@ -37,6 +37,7 @@ var consulUpdateCmd = &cobra.Command{
 			ConsulKey:       consulKey,
 			ConsulTokenFile: consulTokenFile,
 			ConsulNamespace: consulNamespace,
+			ConsulHttpProxy: consulHttpProxy,
 		}
 
 		c.Consul[args[0]] = C
@@ -60,4 +61,5 @@ func init() {
 	consulUpdateCmd.PersistentFlags().StringVar(&consulCert, "cert", "", "set path to a PEM-encoded client certificate on the local disk")
 	consulUpdateCmd.PersistentFlags().StringVar(&consulKey, "key", "", "set path to an unencrypted, PEM-encoded private key on disk which corresponds to the matching client certificate")
 	consulUpdateCmd.PersistentFlags().StringVar(&consulNamespace, "namespace", "", "set consul namespace for this context")
+	consulUpdateCmd.PersistentFlags().StringVar(&consulHttpProxy, "http-proxy", "", "Set the HTTPS proxy location which should be used by all requests to access Consul")
 }

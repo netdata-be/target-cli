@@ -38,7 +38,8 @@ var terraformCreateCmd = &cobra.Command{
 		}
 
 		t := &Terraform{
-			Vars: result,
+			Vars:      result,
+			HttpProxy: terraformHttpProxy,
 		}
 
 		c.Terraform[args[0]] = t
@@ -56,6 +57,7 @@ var terraformCreateCmd = &cobra.Command{
 func init() {
 
 	terraformCreateCmd.PersistentFlags().StringSliceVarP(&tfVarFlag, "var", "v", []string{}, "set a terraform variable in a key/value pair, e.g name=rob. Can be specified multiple times")
+	terraformCreateCmd.PersistentFlags().StringVar(&terraformHttpProxy, "http-proxy", "", "Set the HTTPS proxy location which should be used by all requests")
 
 	err := terraformCreateCmd.MarkPersistentFlagRequired(
 		"var",

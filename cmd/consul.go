@@ -19,6 +19,7 @@ var (
 	consulCert      string
 	consulKey       string
 	consulNamespace string
+	consulHttpProxy string
 )
 
 var consulCmd = &cobra.Command{
@@ -113,6 +114,13 @@ var consulSetDefaultCmd = &cobra.Command{
 		if namespace != "" {
 			shellCommandNameSpace = fmt.Sprintf("export CONSUL_NAMESPACE=%s", namespace)
 			exportCommandStr = append(exportCommandStr, shellCommandNameSpace)
+		}
+
+		var shellCommandHttpProxy string
+		httpProxy := context.ConsulHttpProxy
+		if httpProxy != "" {
+			shellCommandHttpProxy = fmt.Sprintf("export HTTPS_PROXY=%s", httpProxy)
+			exportCommandStr = append(exportCommandStr, shellCommandHttpProxy)
 		}
 
 		commandStr := strings.Join(exportCommandStr, "; ")
