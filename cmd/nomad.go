@@ -122,6 +122,8 @@ var nomadSetDefaultCmd = &cobra.Command{
 		if httpProxy != "" {
 			shellCommandHttpProxy = fmt.Sprintf("export HTTPS_PROXY=%s", httpProxy)
 			exportCommandStr = append(exportCommandStr, shellCommandHttpProxy)
+			shellCommandHttpProxy = fmt.Sprintf("export HTTP_PROXY=%s", httpProxy)
+			exportCommandStr = append(exportCommandStr, shellCommandHttpProxy)
 		}
 
 		commandStr := strings.Join(exportCommandStr, "; ")

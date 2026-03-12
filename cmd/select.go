@@ -120,6 +120,10 @@ var selectVaultCmd = &cobra.Command{
 			exportCommands = append(exportCommands, fmt.Sprintf("export VAULT_HTTP_PROXY=%s", context.HttpProxy))
 		}
 
+		if context.HttpsProxy != "" {
+			exportCommands = append(exportCommands, fmt.Sprintf("export HTTPS_PROXY=%s", context.HttpsProxy))
+		}
+
 		if context.DisableRedirects != "" {
 			exportCommands = append(exportCommands, fmt.Sprintf("export VAULT_DISABLE_REDIRECTS=%s", context.DisableRedirects))
 		}
@@ -182,6 +186,11 @@ var selectNomadCmd = &cobra.Command{
 			exportCommands = append(exportCommands, fmt.Sprintf("export NOMAD_REGION=%s", context.NomadRegion))
 		}
 
+		if context.NomadHttpProxy != "" {
+			exportCommands = append(exportCommands, fmt.Sprintf("export HTTPS_PROXY=%s", context.NomadHttpProxy))
+			exportCommands = append(exportCommands, fmt.Sprintf("export HTTP_PROXY=%s", context.NomadHttpProxy))
+		}
+
 		fmt.Println(strings.Join(exportCommands, "; "))
 	},
 }
@@ -238,6 +247,10 @@ var selectConsulCmd = &cobra.Command{
 
 		if context.ConsulNamespace != "" {
 			exportCommandStr = append(exportCommandStr, fmt.Sprintf("export CONSUL_NAMESPACE=%s", context.ConsulNamespace))
+		}
+
+		if context.ConsulHttpProxy != "" {
+			exportCommandStr = append(exportCommandStr, fmt.Sprintf("export HTTPS_PROXY=%s", context.ConsulHttpProxy))
 		}
 
 		fmt.Println(strings.Join(exportCommandStr, "; "))
@@ -349,6 +362,10 @@ var selectBoundaryCmd = &cobra.Command{
 			exportCommands = append(exportCommands, fmt.Sprintf("export BOUNDARY_SCOPE_ID=%s", context.ScopeId))
 		}
 
+		if context.HttpProxy != "" {
+			exportCommands = append(exportCommands, fmt.Sprintf("export HTTPS_PROXY=%s", context.HttpProxy))
+		}
+
 		fmt.Println(strings.Join(exportCommands, "; "))
 	},
 }
@@ -377,6 +394,10 @@ var selectTerraformCmd = &cobra.Command{
 
 		for k, v := range context.Vars {
 			exportCommands = append(exportCommands, fmt.Sprintf("export TF_VAR_%s=%s", k, v))
+		}
+
+		if context.HttpProxy != "" {
+			exportCommands = append(exportCommands, fmt.Sprintf("export HTTPS_PROXY=%s", context.HttpProxy))
 		}
 
 		commandStr := strings.Join(exportCommands, "; ")
