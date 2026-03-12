@@ -1,12 +1,12 @@
 package cmd
 
 import (
+	"errors"
 	"fmt"
 	"github.com/devops-rob/target-cli/pkg/targetdir"
 	"os"
 	"reflect"
 
-	"github.com/devops-rob/target-cli/pkg/targetdir"
 	"github.com/spf13/cobra"
 
 	homedir "github.com/mitchellh/go-homedir"
@@ -79,6 +79,7 @@ type Vault struct {
 	SvrLookup        string `json:"svr_lookup,omitempty" mapstructure:"svr_lookup"`
 	Mfa              string `json:"mfa,omitempty" mapstructure:"mfa"`
 	HttpProxy        string `json:"http_proxy,omitempty" mapstructure:"http_proxy"`
+	HttpsProxy       string `json:"https_proxy,omitempty" mapstructure:"https_proxy"`
 	DisableRedirects string `json:"disable_redirects,omitempty" mapstructure:"disable_redirects"`
 }
 
@@ -108,6 +109,7 @@ type Nomad struct {
 	NomadKey       string `json:"key,omitempty" mapstructure:"key"`
 	NomadRegion    string `json:"region,omitempty" mapstructure:"region"`
 	NomadNamespace string `json:"namespace,omitempty" mapstructure:"namespace"`
+	NomadHttpProxy string `json:"http_proxy,omitempty" mapstructure:"http_proxy"`
 }
 
 // Default struct with default profiles
