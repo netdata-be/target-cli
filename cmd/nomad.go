@@ -18,8 +18,9 @@ var (
 	nomadCaCert    string
 	nomadCert      string
 	nomadKey       string
-	nomadNamespace string
-	nomadHttpProxy string
+	nomadNamespace  string
+	nomadHttpProxy  string
+	nomadSkipVerify bool
 )
 
 var nomadCmd = &cobra.Command{
@@ -124,6 +125,10 @@ var nomadSetDefaultCmd = &cobra.Command{
 			exportCommandStr = append(exportCommandStr, shellCommandHttpProxy)
 			shellCommandHttpProxy = fmt.Sprintf("export HTTP_PROXY=%s", httpProxy)
 			exportCommandStr = append(exportCommandStr, shellCommandHttpProxy)
+		}
+
+		if context.NomadSkipVerify {
+			exportCommandStr = append(exportCommandStr, "export NOMAD_SKIP_VERIFY=true")
 		}
 
 		commandStr := strings.Join(exportCommandStr, "; ")

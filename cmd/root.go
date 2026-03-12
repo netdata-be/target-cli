@@ -92,7 +92,7 @@ var (
 // Consul struct with flag parameters
 type Consul struct {
 	ConsulEndpoint  string `json:"endpoint" mapstructure:"endpoint"`
-	ConsulToken     string `json:"token,omitempty" mastructure:"token"`
+	ConsulToken     string `json:"token,omitempty" mapstructure:"token"`
 	ConsulCaPath    string `json:"ca_path,omitempty" mapstructure:"ca_path"`
 	ConsulCaCert    string `json:"ca_cert,omitempty" mapstructure:"ca_cert"`
 	ConsulCert      string `json:"cert,omitempty" mapstructure:"cert"`
@@ -105,14 +105,15 @@ type Consul struct {
 // Nomad struct with flag parameters
 type Nomad struct {
 	NomadEndpoint  string `json:"endpoint" mapstructure:"endpoint"`
-	NomadToken     string `json:"token,omitempty" mastructure:"token"`
+	NomadToken     string `json:"token,omitempty" mapstructure:"token"`
 	NomadCaPath    string `json:"ca_path,omitempty" mapstructure:"ca_path"`
 	NomadCaCert    string `json:"ca_cert,omitempty" mapstructure:"ca_cert"`
 	NomadCert      string `json:"cert,omitempty" mapstructure:"cert"`
 	NomadKey       string `json:"key,omitempty" mapstructure:"key"`
 	NomadRegion    string `json:"region,omitempty" mapstructure:"region"`
-	NomadNamespace string `json:"namespace,omitempty" mapstructure:"namespace"`
-	NomadHttpProxy string `json:"http_proxy,omitempty" mapstructure:"http_proxy"`
+	NomadNamespace  string `json:"namespace,omitempty" mapstructure:"namespace"`
+	NomadHttpProxy  string `json:"http_proxy,omitempty" mapstructure:"http_proxy"`
+	NomadSkipVerify bool   `json:"skip_verify,omitempty" mapstructure:"skip_verify"`
 }
 
 // Default struct with default profiles

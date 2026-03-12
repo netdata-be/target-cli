@@ -119,6 +119,8 @@ var consulSetDefaultCmd = &cobra.Command{
 		var shellCommandHttpProxy string
 		httpProxy := context.ConsulHttpProxy
 		if httpProxy != "" {
+			shellCommandHttpProxy = fmt.Sprintf("export HTTP_PROXY=%s", httpProxy)
+			exportCommandStr = append(exportCommandStr, shellCommandHttpProxy)
 			shellCommandHttpProxy = fmt.Sprintf("export HTTPS_PROXY=%s", httpProxy)
 			exportCommandStr = append(exportCommandStr, shellCommandHttpProxy)
 		}

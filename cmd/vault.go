@@ -33,7 +33,6 @@ var (
 	vaultSvrLookup        string
 	vaultMfa              string
 	vaultHttpProxy        string
-	vaultHttpsProxy       string
 	vaultDisableRedirects string
 )
 
@@ -217,15 +216,10 @@ var vaultSetDefaultCmd = &cobra.Command{
 		var shellCommandHttpProxy string
 		httpProxy := context.HttpProxy
 		if httpProxy != "" {
-			shellCommandHttpProxy = fmt.Sprintf("export VAULT_HTTP_PROXY=%s", httpProxy)
+			shellCommandHttpProxy = fmt.Sprintf("export HTTPS_PROXY=%s", httpProxy)
 			exportCommandStr = append(exportCommandStr, shellCommandHttpProxy)
-		}
-
-		var shellCommandHttpsProxy string
-		httpsProxy := context.HttpsProxy
-		if httpsProxy != "" {
-			shellCommandHttpsProxy = fmt.Sprintf("export HTTPS_PROXY=%s", httpsProxy)
-			exportCommandStr = append(exportCommandStr, shellCommandHttpsProxy)
+			shellCommandHttpProxy = fmt.Sprintf("export HTTP_PROXY=%s", httpProxy)
+			exportCommandStr = append(exportCommandStr, shellCommandHttpProxy)
 		}
 
 		var shellCommandDisableRedirects string

@@ -26,15 +26,16 @@ var nomadUpdateCmd = &cobra.Command{
 
 		}
 		n := &Nomad{
-			NomadEndpoint:  nomadEndpoint,
-			NomadToken:     nomadToken,
-			NomadCaPath:    nomadCaPath,
-			NomadCaCert:    nomadCaCert,
-			NomadCert:      nomadCert,
-			NomadKey:       nomadKey,
-			NomadRegion:    nomadRegion,
-			NomadNamespace: nomadNamespace,
-			NomadHttpProxy: nomadHttpProxy,
+			NomadEndpoint:   nomadEndpoint,
+			NomadToken:      nomadToken,
+			NomadCaPath:     nomadCaPath,
+			NomadCaCert:     nomadCaCert,
+			NomadCert:       nomadCert,
+			NomadKey:        nomadKey,
+			NomadRegion:     nomadRegion,
+			NomadNamespace:  nomadNamespace,
+			NomadHttpProxy:  nomadHttpProxy,
+			NomadSkipVerify: nomadSkipVerify,
 		}
 
 		c.Nomad[args[0]] = n
@@ -59,5 +60,6 @@ func init() {
 	nomadUpdateCmd.PersistentFlags().StringVar(&nomadKey, "key", "", "set path to an unencrypted, PEM-encoded private key on disk which corresponds to the matching client certificate")
 	nomadUpdateCmd.PersistentFlags().StringVar(&nomadNamespace, "namespace", "", "set Nomad namespace to use for command")
 	nomadUpdateCmd.PersistentFlags().StringVar(&nomadHttpProxy, "http-proxy", "", "Set the HTTPS proxy location which should be used by all requests to access Nomad")
+	nomadUpdateCmd.PersistentFlags().BoolVar(&nomadSkipVerify, "skip-verify", false, "Skip TLS verification when communicating with Nomad")
 
 }

@@ -191,6 +191,10 @@ var selectNomadCmd = &cobra.Command{
 			exportCommands = append(exportCommands, fmt.Sprintf("export HTTP_PROXY=%s", context.NomadHttpProxy))
 		}
 
+		if context.NomadSkipVerify {
+			exportCommands = append(exportCommands, "export NOMAD_SKIP_VERIFY=true")
+		}
+
 		fmt.Println(strings.Join(exportCommands, "; "))
 	},
 }
@@ -251,6 +255,7 @@ var selectConsulCmd = &cobra.Command{
 
 		if context.ConsulHttpProxy != "" {
 			exportCommandStr = append(exportCommandStr, fmt.Sprintf("export HTTPS_PROXY=%s", context.ConsulHttpProxy))
+			exportCommandStr = append(exportCommandStr, fmt.Sprintf("export HTTP_PROXY=%s", context.ConsulHttpProxy))
 		}
 
 		fmt.Println(strings.Join(exportCommandStr, "; "))
