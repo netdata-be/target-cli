@@ -19,6 +19,7 @@ var (
 	nomadCert      string
 	nomadKey       string
 	nomadNamespace string
+	nomadHttpProxy string
 )
 
 var nomadCmd = &cobra.Command{
@@ -114,6 +115,13 @@ var nomadSetDefaultCmd = &cobra.Command{
 		if namespace != "" {
 			shellCommandNameSpace = fmt.Sprintf("export NOMAD_NAMESPACE=%s", namespace)
 			exportCommandStr = append(exportCommandStr, shellCommandNameSpace)
+		}
+
+		var shellCommandHttpProxy string
+		httpProxy := context.NomadHttpProxy
+		if httpProxy != "" {
+			shellCommandHttpProxy = fmt.Sprintf("export HTTPS_PROXY=%s", httpProxy)
+			exportCommandStr = append(exportCommandStr, shellCommandHttpProxy)
 		}
 
 		commandStr := strings.Join(exportCommandStr, "; ")

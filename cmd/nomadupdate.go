@@ -34,6 +34,7 @@ var nomadUpdateCmd = &cobra.Command{
 			NomadKey:       nomadKey,
 			NomadRegion:    nomadRegion,
 			NomadNamespace: nomadNamespace,
+			NomadHttpProxy: nomadHttpProxy,
 		}
 
 		c.Nomad[args[0]] = n
@@ -57,5 +58,6 @@ func init() {
 	nomadUpdateCmd.PersistentFlags().StringVar(&nomadCert, "cert", "", "set path to a PEM-encoded client certificate on the local disk")
 	nomadUpdateCmd.PersistentFlags().StringVar(&nomadKey, "key", "", "set path to an unencrypted, PEM-encoded private key on disk which corresponds to the matching client certificate")
 	nomadUpdateCmd.PersistentFlags().StringVar(&nomadNamespace, "namespace", "", "set Nomad namespace to use for command")
+	nomadUpdateCmd.PersistentFlags().StringVar(&nomadHttpProxy, "http-proxy", "", "Set the HTTPS proxy location which should be used by all requests to access Nomad")
 
 }
