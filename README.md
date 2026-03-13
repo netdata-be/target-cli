@@ -149,6 +149,64 @@ target vault delete staging
 target vault list
 ```
 
+### Configuration Flags
+
+Below is a comprehensive list of all available configuration flags for Vault, Consul, and Nomad profiles.
+
+#### Vault Flags
+
+- `--endpoint`: Set the Vault server endpoint (e.g., `https://vault.example.com:8200`)
+- `--token`: Set the Vault authentication token
+- `--capath`: Path to a directory of PEM-encoded CA certificate files
+- `--cacert`: Path to a PEM-encoded CA certificate file
+- `--cert`: Path to a PEM-encoded client certificate
+- `--key`: Path to an unencrypted, PEM-encoded private key
+- `--format`: Output format (`table`, `json`, or `yaml`)
+- `--namespace`: Vault namespace to use
+- `--skip-verify`: Skip TLS verification (string value)
+- `--client-timeout`: Set the client timeout (e.g., `60s`)
+- `--cluster-addr`: Address for cluster members in HA mode
+- `--license`: Specify a license for this node
+- `--license-path`: Path to a license file on disk
+- `--log-level`: Set the Vault server's log level
+- `--max-retries`: Maximum number of retries for certain error codes
+- `--redirect-addr`: Address for client redirects in HA mode
+- `--tls-server-name`: SNI host name for TLS connections
+- `--cli-no-colour`: Disable ANSI color escape sequences (string value)
+- `--no-color`: Disable color output in Vault CLI (boolean flag)
+- `--rate-limit`: Set the request rate limit
+- `--svr-lookup`: Enable DNS SRV lookup for host
+- `--mfa`: Set MFA credentials (format: `mfa_method_name[:key[=value]]`)
+- `--http-proxy`: Set the HTTP/HTTPS proxy location
+- `--disable-redirects`: Prevent the client from following redirects
+
+#### Consul Flags
+
+- `--endpoint`: Set the Consul server endpoint (e.g., `https://consul.example.com:8500`)
+- `--token`: Set the Consul ACL token
+- `--tokenfile`: Path to a file containing the API access token
+- `--capath`: Path to a directory of PEM-encoded CA certificate files
+- `--cacert`: Path to a PEM-encoded CA certificate file
+- `--cert`: Path to a PEM-encoded client certificate
+- `--key`: Path to an unencrypted, PEM-encoded private key
+- `--namespace`: Consul namespace to use
+- `--http-proxy`: Set the HTTPS proxy location
+
+#### Nomad Flags
+
+- `--endpoint`: Set the Nomad server endpoint (e.g., `https://nomad.example.com:4646`)
+- `--region`: Set the Nomad server region
+- `--token`: Set the ACL token for API authentication
+- `--capath`: Path to a directory of PEM-encoded CA certificate files
+- `--cacert`: Path to a PEM-encoded CA certificate file
+- `--cert`: Path to a PEM-encoded client certificate
+- `--key`: Path to an unencrypted, PEM-encoded private key
+- `--namespace`: Nomad namespace to use
+- `--http-proxy`: Set the HTTPS proxy location
+- `--skip-verify`: Skip TLS verification (boolean flag)
+- `--disable-cli-hints`: Disable CLI hints in Nomad (boolean flag)
+- `--no-color`: Disable color output in Nomad CLI (boolean flag)
+
 ### Setting Default Context Profiles
 
 Setting the default or changing the default context profile for a tool can be done with the `set-default` sub command. 
@@ -174,3 +232,11 @@ In order for this to take effect in the current shell session, the above command
 ```shell
 eval $(target vault select dev)
 ```
+
+You can also select a profile for all tools at once using the global select command:
+
+```shell
+target select dev
+```
+
+This will output the environment variables for all tools that have a profile with that name, in the order: vault, boundary, nomad, consul. Each tool's variables are printed on separate lines.
