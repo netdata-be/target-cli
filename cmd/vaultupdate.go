@@ -51,6 +51,7 @@ var vaultUpdateCmd = &cobra.Command{
 			Mfa:              vaultMfa,
 			HttpProxy:        vaultHttpProxy,
 			DisableRedirects: vaultDisableRedirects,
+			NoColor:          vaultNoColor,
 		}
 
 		c.Vault[args[0]] = v
@@ -85,6 +86,7 @@ func init() {
 	vaultUpdateCmd.PersistentFlags().StringVar(&vaultRedirectAddr, "redirect-addr", "", "Set the address that should be used when clients are redirected to this node when in High Availability mode")
 	vaultUpdateCmd.PersistentFlags().StringVar(&vaultTlsServerName, "tls-server-name", "", "Set the name to use as the SNI host when connecting via TLS")
 	vaultUpdateCmd.PersistentFlags().StringVar(&vaultCliNoColour, "cli-no-colour", "", "If provided, Vault output will not include ANSI color escape sequence characters")
+	vaultUpdateCmd.PersistentFlags().BoolVar(&vaultNoColor, "no-color", false, "Disable color output in Vault CLI")
 	vaultUpdateCmd.PersistentFlags().StringVar(&vaultRateLimit, "rate-limit", "", "Set the rate at which the vault command sends requests to Vault")
 	vaultUpdateCmd.PersistentFlags().StringVar(&vaultSvrLookup, "svr-lookup", "", "Enables the client to lookup the host through DNS SRV look up")
 	vaultUpdateCmd.PersistentFlags().StringVar(&vaultMfa, "mfa", "", "Set the MFA credentials in the format mfa_method_name[:key[=value]]")

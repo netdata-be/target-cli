@@ -34,6 +34,7 @@ var (
 	vaultMfa              string
 	vaultHttpProxy        string
 	vaultDisableRedirects string
+	vaultNoColor          bool
 )
 
 var vaultCmd = &cobra.Command{
@@ -190,6 +191,10 @@ var vaultSetDefaultCmd = &cobra.Command{
 		if cliNoColour != "" {
 			shellCommandCliNoColour = fmt.Sprintf("export VAULT_CLI_NO_COLOR=%s", cliNoColour)
 			exportCommandStr = append(exportCommandStr, shellCommandCliNoColour)
+		}
+
+		if context.NoColor {
+			exportCommandStr = append(exportCommandStr, "export VAULT_CLI_NO_COLOR=true")
 		}
 
 		var shellCommandRateLimit string

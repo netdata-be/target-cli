@@ -104,6 +104,10 @@ var selectVaultCmd = &cobra.Command{
 			exportCommands = append(exportCommands, fmt.Sprintf("export VAULT_CLI_NO_COLOR=%s", context.CliNoColour))
 		}
 
+		if context.NoColor {
+			exportCommands = append(exportCommands, "export VAULT_CLI_NO_COLOR=true")
+		}
+
 		if context.RateLimit != "" {
 			exportCommands = append(exportCommands, fmt.Sprintf("export VAULT_RATE_LIMIT=%s", context.RateLimit))
 		}

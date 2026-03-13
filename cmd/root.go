@@ -83,6 +83,7 @@ type Vault struct {
 	HttpProxy        string `json:"http_proxy,omitempty" mapstructure:"http_proxy"`
 	HttpsProxy       string `json:"https_proxy,omitempty" mapstructure:"https_proxy"`
 	DisableRedirects string `json:"disable_redirects,omitempty" mapstructure:"disable_redirects"`
+	NoColor          bool   `json:"no_color,omitempty" mapstructure:"no_color"`
 }
 
 var (
