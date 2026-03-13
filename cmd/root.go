@@ -145,9 +145,356 @@ Example:
 		"terraform",
 		"config",
 		"version",
+		"select",
 	},
 	Args:    cobra.OnlyValidArgs,
 	Version: version,
+}
+
+var selectCmd = &cobra.Command{
+	Use:     "select [profile]",
+	Short:   "select a context profile for all tools",
+	Long:    `select a context profile for all tools that have the profile defined.`,
+	Example: `target select dev`,
+	Args: func(cmd *cobra.Command, args []string) error {
+		if len(args) != 1 {
+			return errors.New("requires a profile name argument")
+		}
+		return nil
+	},
+	Run: func(cmd *cobra.Command, args []string) {
+		profile := args[0]
+
+		globalProxies := make(map[string]string)
+
+		// Collect proxies from all tools
+		if c.Vault[profile] != nil {
+			context := c.Vault[profile]
+			if context.HttpsProxy != "" {
+				globalProxies["HTTPS_PROXY"] = context.HttpsProxy
+			}
+		}
+
+		if c.Boundary[profile] != nil {
+			context := c.Boundary[profile]
+			if context.HttpProxy != "" {
+				globalProxies["HTTPS_PROXY"] = context.HttpProxy
+			}
+		}
+
+		if c.Nomad[profile] != nil {
+			context := c.Nomad[profile]
+			if context.NomadHttpProxy != "" {
+				globalProxies["HTTPS_PROXY"] = context.NomadHttpProxy
+				globalProxies["HTTP_PROXY"] = context.NomadHttpProxy
+			}
+		}
+
+		if c.Consul[profile] != nil {
+			context := c.Consul[profile]
+			if context.ConsulHttpProxy != "" {
+				globalProxies["HTTPS_PROXY"] = context.ConsulHttpProxy
+				globalProxies["HTTP_PROXY"] = context.ConsulHttpProxy
+			}
+		}
+
+		// Print global proxies first
+		for key, value := range globalProxies {
+			fmt.Printf("export %s=%s\n", key, value)
+		}
+
+		// Vault
+		if c.Vault[profile] != nil {
+			context := c.Vault[profile]
+			exportCommands := []string{}
+
+			if context.Endpoint != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export VAULT_ADDR=%s", context.Endpoint))
+			}
+
+			if context.Token != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export VAULT_TOKEN=%s", context.Token))
+			}
+
+			if context.Namespace != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export VAULT_NAMESPACE=%s", context.Namespace))
+			}
+
+			if context.CaCert != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export VAULT_CACERT=%s", context.CaCert))
+			}
+
+			if context.Cert != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export VAULT_CLIENT_CERT=%s", context.Cert))
+			}
+
+			if context.CaPath != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export VAULT_CAPATH=%s", context.CaPath))
+			}
+
+			if context.Key != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export VAULT_CLIENT_KEY=%s", context.Key))
+			}
+
+			if context.Format != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export VAULT_FORMAT=%s", context.Format))
+			}
+
+			if context.SkipVerify != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export VAULT_SKIP_VERIFY=%s", context.SkipVerify))
+			}
+
+			if context.ClientTimeout != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export VAULT_CLIENT_TIMEOUT=%s", context.ClientTimeout))
+			}
+
+			if context.ClusterAddr != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export VAULT_CLUSTER_ADDR=%s", context.ClusterAddr))
+			}
+
+			if context.License != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export VAULT_LICENSE=%s", context.License))
+			}
+
+			if context.LicensePath != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export VAULT_LICENSE_PATH=%s", context.LicensePath))
+			}
+
+			if context.LogLevel != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export VAULT_LOG_LEVEL=%s", context.LogLevel))
+			}
+
+			if context.MaxRetries != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export VAULT_MAX_RETRIES=%s", context.MaxRetries))
+			}
+
+			if context.RedirectAddr != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export VAULT_REDIRECT_ADDR=%s", context.RedirectAddr))
+			}
+
+			if context.TlsServerName != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export VAULT_TLS_SERVER_NAME=%s", context.TlsServerName))
+			}
+
+			if context.CliNoColour != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export VAULT_CLI_NO_COLOR=%s", context.CliNoColour))
+			}
+
+			if context.NoColor {
+				exportCommands = append(exportCommands, "export VAULT_CLI_NO_COLOR=true")
+			}
+
+			if context.RateLimit != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export VAULT_RATE_LIMIT=%s", context.RateLimit))
+			}
+
+			if context.SvrLookup != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export VAULT_SRV_LOOKUP=%s", context.SvrLookup))
+			}
+
+			if context.Mfa != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export VAULT_MFA=%s", context.Mfa))
+			}
+
+			if context.HttpProxy != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export VAULT_HTTP_PROXY=%s", context.HttpProxy))
+			}
+
+			if context.DisableRedirects != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export VAULT_DISABLE_REDIRECTS=%s", context.DisableRedirects))
+			}
+
+			for _, cmd := range exportCommands {
+				fmt.Println(cmd)
+			}
+		}
+
+		// Boundary
+		if c.Boundary[profile] != nil {
+			context := c.Boundary[profile]
+			exportCommands := []string{}
+
+			if context.Endpoint != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export BOUNDARY_ADDR=%s", context.Endpoint))
+			}
+
+			if context.Token != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export BOUNDARY_TOKEN=%s", context.Token))
+			}
+
+			if context.TokenName != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export BOUNDARY_TOKEN_NAME=%s", context.TokenName))
+			}
+
+			if context.CaPath != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export BOUNDARY_CAPATH=%s", context.CaPath))
+			}
+
+			if context.CaCert != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export BOUNDARY_CACERT=%s", context.CaCert))
+			}
+
+			if context.Cert != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export BOUNDARY_CLIENT_CERT=%s", context.Cert))
+			}
+
+			if context.Key != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export BOUNDARY_CLIENT_KEY=%s", context.Key))
+			}
+
+			if context.TlsInsecure != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export BOUNDARY_TLS_INSECURE=%s", context.TlsInsecure))
+			}
+
+			if context.TlsServerName != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export BOUNDARY_TLS_SERVER_NAME=%s", context.TlsServerName))
+			}
+
+			if context.RecoveryConfig != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export BOUNDARY_RECOVERY_CONFIG=%s", context.RecoveryConfig))
+			}
+
+			if context.ConnectAuthZToken != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export BOUNDARY_CONNECT_AUTHZ_TOKEN=%s", context.ConnectAuthZToken))
+			}
+
+			if context.ConnectExec != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export BOUNDARY_CONNECT_EXEC=%s", context.ConnectExec))
+			}
+
+			if context.ConnectListenAddr != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export BOUNDARY_CONNECT_LISTEN_ADDR=%s", context.ConnectListenAddr))
+			}
+
+			if context.ConnectListenPort != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export BOUNDARY_CONNECT_LISTEN_PORT=%s", context.ConnectListenPort))
+			}
+
+			if context.ConnectTargetScopeId != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export BOUNDARY_CONNECT_TARGET_SCOPE_ID=%s", context.ConnectTargetScopeId))
+			}
+
+			if context.ConnectTargetScopeName != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export BOUNDARY_CONNECT_TARGET_SCOPE_NAME=%s", context.ConnectTargetScopeName))
+			}
+
+			if context.AuthMethodId != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export BOUNDARY_AUTH_METHOD_ID=%s", context.AuthMethodId))
+			}
+
+			if context.LogLevel != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export BOUNDARY_LOG_LEVEL=%s", context.LogLevel))
+			}
+
+			if context.Format != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export BOUNDARY_CLI_FORMAT=%s", context.Format))
+			}
+
+			if context.ScopeId != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export BOUNDARY_SCOPE_ID=%s", context.ScopeId))
+			}
+
+			for _, cmd := range exportCommands {
+				fmt.Println(cmd)
+			}
+		}
+
+		// Nomad
+		if c.Nomad[profile] != nil {
+			context := c.Nomad[profile]
+			exportCommands := []string{}
+
+			if context.NomadEndpoint != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export NOMAD_ADDR=%s", context.NomadEndpoint))
+			}
+
+			if context.NomadToken != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export NOMAD_TOKEN=%s", context.NomadToken))
+			}
+
+			if context.NomadNamespace != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export NOMAD_NAMESPACE=%s", context.NomadNamespace))
+			}
+
+			if context.NomadCaCert != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export NOMAD_CACERT=%s", context.NomadCaCert))
+			}
+
+			if context.NomadCert != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export NOMAD_CLIENT_CERT=%s", context.NomadCert))
+			}
+
+			if context.NomadCaPath != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export NOMAD_CAPATH=%s", context.NomadCaPath))
+			}
+
+			if context.NomadKey != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export NOMAD_CLIENT_KEY=%s", context.NomadKey))
+			}
+
+			if context.NomadRegion != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export NOMAD_REGION=%s", context.NomadRegion))
+			}
+
+			if context.NomadSkipVerify {
+				exportCommands = append(exportCommands, "export NOMAD_SKIP_VERIFY=true")
+			}
+
+			if context.NomadDisableCliHints {
+				exportCommands = append(exportCommands, "export NOMAD_CLI_SHOW_HINTS=false")
+			}
+
+			if context.NomadNoColor {
+				exportCommands = append(exportCommands, "export NOMAD_CLI_NO_COLOR=true")
+			}
+
+			for _, cmd := range exportCommands {
+				fmt.Println(cmd)
+			}
+		}
+
+		// Consul
+		if c.Consul[profile] != nil {
+			context := c.Consul[profile]
+			exportCommands := []string{}
+
+			if context.ConsulEndpoint != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export CONSUL_HTTP_ADDR=%s", context.ConsulEndpoint))
+			}
+
+			if context.ConsulToken != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export CONSUL_HTTP_TOKEN=%s", context.ConsulToken))
+			}
+
+			if context.ConsulTokenFile != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export CONSUL_HTTP_TOKEN_FILE=%s", context.ConsulTokenFile))
+			}
+
+			if context.ConsulNamespace != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export CONSUL_NAMESPACE=%s", context.ConsulNamespace))
+			}
+
+			if context.ConsulCaCert != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export CONSUL_CACERT=%s", context.ConsulCaCert))
+			}
+
+			if context.ConsulCert != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export CONSUL_CLIENT_CERT=%s", context.ConsulCert))
+			}
+
+			if context.ConsulCaPath != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export CONSUL_CAPATH=%s", context.ConsulCaPath))
+			}
+
+			if context.ConsulKey != "" {
+				exportCommands = append(exportCommands, fmt.Sprintf("export CONSUL_CLIENT_KEY=%s", context.ConsulKey))
+			}
+
+			for _, cmd := range exportCommands {
+				fmt.Println(cmd)
+			}
+		}
+	},
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -171,6 +518,7 @@ func init() {
 	rootCmd.AddCommand(boundaryCmd)
 	rootCmd.AddCommand(terraformCmd)
 	rootCmd.AddCommand(versionCmd)
+	rootCmd.AddCommand(selectCmd)
 
 }
 
