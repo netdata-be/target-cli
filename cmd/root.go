@@ -114,6 +114,8 @@ type Nomad struct {
 	NomadNamespace  string `json:"namespace,omitempty" mapstructure:"namespace"`
 	NomadHttpProxy  string `json:"http_proxy,omitempty" mapstructure:"http_proxy"`
 	NomadSkipVerify bool   `json:"skip_verify,omitempty" mapstructure:"skip_verify"`
+	NomadDisableCliHints bool `json:"disable_cli_hints,omitempty" mapstructure:"disable_cli_hints"`
+	NomadNoColor bool `json:"no_color,omitempty" mapstructure:"no_color"`
 }
 
 // Default struct with default profiles

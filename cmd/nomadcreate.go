@@ -35,6 +35,8 @@ var nomadCreateCmd = &cobra.Command{
 			NomadNamespace:  nomadNamespace,
 			NomadHttpProxy:  nomadHttpProxy,
 			NomadSkipVerify: nomadSkipVerify,
+			NomadDisableCliHints: nomadDisableCliHints,
+			NomadNoColor: nomadNoColor,
 		}
 
 		c.Nomad[args[0]] = n
@@ -57,6 +59,8 @@ func init() {
 	nomadCreateCmd.PersistentFlags().StringVar(&nomadNamespace, "namespace", "", "set Nomad namespace to use for command")
 	nomadCreateCmd.PersistentFlags().StringVar(&nomadHttpProxy, "http-proxy", "", "Set the HTTPS proxy location which should be used by all requests to access Nomad")
 	nomadCreateCmd.PersistentFlags().BoolVar(&nomadSkipVerify, "skip-verify", false, "Skip TLS verification when communicating with Nomad")
+	nomadCreateCmd.PersistentFlags().BoolVar(&nomadDisableCliHints, "disable-cli-hints", false, "Disable CLI hints in Nomad")
+	nomadCreateCmd.PersistentFlags().BoolVar(&nomadNoColor, "no-color", false, "Disable color output in Nomad CLI")
 
 	nomadCreateCmd.MarkPersistentFlagRequired(
 		"endpoint",

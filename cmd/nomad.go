@@ -18,9 +18,11 @@ var (
 	nomadCaCert    string
 	nomadCert      string
 	nomadKey       string
-	nomadNamespace  string
+	nomadNamespace string
 	nomadHttpProxy  string
 	nomadSkipVerify bool
+	nomadDisableCliHints bool
+	nomadNoColor bool
 )
 
 var nomadCmd = &cobra.Command{
@@ -129,6 +131,14 @@ var nomadSetDefaultCmd = &cobra.Command{
 
 		if context.NomadSkipVerify {
 			exportCommandStr = append(exportCommandStr, "export NOMAD_SKIP_VERIFY=true")
+		}
+
+		if context.NomadDisableCliHints {
+			exportCommandStr = append(exportCommandStr, "export NOMAD_CLI_SHOW_HINTS=false")
+		}
+
+		if context.NomadNoColor {
+			exportCommandStr = append(exportCommandStr, "export NOMAD_CLI_NO_COLOR=true")
 		}
 
 		commandStr := strings.Join(exportCommandStr, "; ")

@@ -195,6 +195,14 @@ var selectNomadCmd = &cobra.Command{
 			exportCommands = append(exportCommands, "export NOMAD_SKIP_VERIFY=true")
 		}
 
+		if context.NomadDisableCliHints {
+			exportCommands = append(exportCommands, "export NOMAD_CLI_SHOW_HINTS=false")
+		}
+
+		if context.NomadNoColor {
+			exportCommands = append(exportCommands, "export NOMAD_CLI_NO_COLOR=true")
+		}
+
 		fmt.Println(strings.Join(exportCommands, "; "))
 	},
 }
