@@ -1,8 +1,10 @@
+version: 2
+
 builds:
   - binary: target
     id: target
     ldflags:
-      - "-X github.com/devops-rob/target-cli/cmd.version={{.Version}}"
+      - "-X github.com/netdata-be/target-cli/cmd.version={{.Version}}"
     goos:
       - darwin
       - linux
@@ -23,13 +25,13 @@ universal_binaries:
 brews:
   -
     name: target
-    homepage: "https://github.com/devops-rob/target-cli"
+    homepage: "https://github.com/netdata-be/target-cli"
     tap:
-      owner: devops-rob
+      owner: netdata-be
       name: homebrew-tap
     commit_author:
-      name: devops-rob
-      email: robert.barnes@devopsrob.com
+      name: netdata-be
+      email: wouter@netdata.be
     commit_msg_template: "Brew formula update for {{ .ProjectName }} version {{ .Tag }}"
     license: "MIT"
 checksum:
