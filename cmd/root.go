@@ -3,7 +3,7 @@ package cmd
 import (
 	"errors"
 	"fmt"
-	"github.com/devops-rob/target-cli/pkg/targetdir"
+	"github.com/netdata-be/target-cli/pkg/targetdir"
 	"os"
 	"reflect"
 

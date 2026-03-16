@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/devops-rob/target-cli/pkg/targetdir"
+	"github.com/netdata-be/target-cli/pkg/targetdir"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 	"log"

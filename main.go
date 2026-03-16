@@ -1,6 +1,6 @@
 package main
 
-import "github.com/devops-rob/target-cli/cmd"
+import "github.com/netdata-be/target-cli/cmd"
 
 func main() {
 	cmd.Execute()

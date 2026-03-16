@@ -1,4 +1,4 @@
-module github.com/devops-rob/target-cli
+module github.com/netdata-be/target-cli
 
 go 1.21
 
