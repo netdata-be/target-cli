@@ -26,7 +26,7 @@ brews:
   -
     name: target
     homepage: "https://github.com/netdata-be/target-cli"
-    tap:
+    repository:
       owner: netdata-be
       name: homebrew-tap
     commit_author:
