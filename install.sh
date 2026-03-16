@@ -27,12 +27,12 @@ if [ "${OS}" == "Darwin" ]; then
   TARGET_COMMAND="unzip"
 fi
 
-version=$(curl https://api.github.com/repos/devops-rob/target-cli/releases/latest | awk -F':|,' '/tag_name/{gsub(/[" ]/,"",$2); print $2}')
+version=$(curl https://api.github.com/repos/netdata-be/target-cli/releases/latest | awk -F':|,' '/tag_name/{gsub(/[" ]/,"",$2); print $2}')
 binary="target-cli_${version}_${TARGET_OS}_${TARGET_ARCH}.${TARGET_EXT}"
 
 
 
-repo="https://github.com/devops-rob/target-cli/releases/download/${version}"
+repo="https://github.com/netdata-be/target-cli/releases/download/${version}"
 
 echo "Downloading $repo/$binary"
 rm -f /tmp/target-cli.${TARGET_EXT}

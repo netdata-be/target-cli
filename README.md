@@ -1,6 +1,6 @@
 # Target CLI
 
-[![goreleaser](https://github.com/devops-rob/target-cli/actions/workflows/release.yaml/badge.svg)](https://github.com/devops-rob/target-cli/actions/workflows/release.yaml)
+[![goreleaser](https://github.com/netdata-be/target-cli/actions/workflows/release.yaml/badge.svg)](https://github.com/netdata-be/target-cli/actions/workflows/release.yaml)
 
 A CLI tool to manage context profiles for HashiCorp products.  This allows you to save connection and configuration details, which would otherwise be set using Environment Variables into context profiles and gives the ability to switch between different profiles as required and set default context profiles.
 
@@ -10,21 +10,21 @@ A CLI tool to manage context profiles for HashiCorp products.  This allows you t
 **Mac / Linux via Brew**
 
 ```shell
-brew tap devops-rob/tap && \
+brew tap netdata-be/tap && \
   brew install target
 ```
 
 **Linux Quick Install**
 
 ```shell
-curl https://raw.githubusercontent.com/devops-rob/target-cli/main/install.sh | bash
+curl https://raw.githubusercontent.com/netdata-be/target-cli/main/install.sh | bash
 ```
 
 **Releases**
 
 Binaries can be downloaded for the releases page.
 
-[https://github.com/devops-rob/target-cli/releases](https://github.com/devops-rob/target-cli/releases)
+[https://github.com/netdata-be/target-cli/releases](https://github.com/netdata-be/target-cli/releases)
 
 ### Example use case
 
