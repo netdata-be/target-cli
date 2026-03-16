@@ -20,7 +20,9 @@ release:
   prerelease: auto
 
 universal_binaries:
-  - replace: true
+  - ids:
+      - target
+    replace: true
 
 brews:
   -
