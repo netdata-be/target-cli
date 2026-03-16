@@ -23,6 +23,7 @@ universal_binaries:
   - ids:
       - target
     id: target
+    name_template: target
     replace: true
 
 homebrew_casks:
