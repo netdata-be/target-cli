@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/olekukonko/tablewriter"
+	"github.com/olekukonko/tablewriter/tw"
 	"github.com/spf13/cobra"
 )
 
@@ -16,11 +17,8 @@ var listVaultCmd = &cobra.Command{
 
 		//var listData [][]string
 		table := tablewriter.NewWriter(os.Stdout)
-		table.SetHeader([]string{
-			"Profile Name",
-			"Endpoint",
-		})
-		table.SetBorders(tablewriter.Border{Left: true, Top: true, Right: true, Bottom: true})
+		table.Header("Profile Name", "Endpoint")
+		table.Options(tablewriter.WithBorders(tw.Border{Left: tw.On, Top: tw.On, Right: tw.On, Bottom: tw.On}))
 
 		for i, e := range c.Vault {
 			data := []string{
@@ -41,11 +39,8 @@ var listConsulCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 
 		table := tablewriter.NewWriter(os.Stdout)
-		table.SetBorders(tablewriter.Border{Left: true, Top: true, Right: true, Bottom: true})
-		table.SetHeader([]string{
-			"Profile Name",
-			"Endpoint",
-		})
+		table.Options(tablewriter.WithBorders(tw.Border{Left: tw.On, Top: tw.On, Right: tw.On, Bottom: tw.On}))
+		table.Header("Profile Name", "Endpoint")
 
 		for i, e := range c.Consul {
 			data := []string{
@@ -66,11 +61,8 @@ var listNomadCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 
 		table := tablewriter.NewWriter(os.Stdout)
-		table.SetBorders(tablewriter.Border{Left: true, Top: true, Right: true, Bottom: true})
-		table.SetHeader([]string{
-			"Profile Name",
-			"Endpoint",
-		})
+		table.Options(tablewriter.WithBorders(tw.Border{Left: tw.On, Top: tw.On, Right: tw.On, Bottom: tw.On}))
+		table.Header("Profile Name", "Endpoint")
 
 		for i, e := range c.Nomad {
 			data := []string{
@@ -91,11 +83,8 @@ var listBoundaryCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 
 		table := tablewriter.NewWriter(os.Stdout)
-		table.SetBorders(tablewriter.Border{Left: true, Top: true, Right: true, Bottom: true})
-		table.SetHeader([]string{
-			"Profile Name",
-			"Endpoint",
-		})
+		table.Options(tablewriter.WithBorders(tw.Border{Left: tw.On, Top: tw.On, Right: tw.On, Bottom: tw.On}))
+		table.Header("Profile Name", "Endpoint")
 
 		for i, e := range c.Boundary {
 			data := []string{
@@ -115,10 +104,8 @@ var listTerraformCmd = &cobra.Command{
 	Example: `target terraform list`,
 	Run: func(cmd *cobra.Command, args []string) {
 		table := tablewriter.NewWriter(os.Stdout)
-		table.SetBorders(tablewriter.Border{Left: true, Top: true, Right: true, Bottom: true})
-		table.SetHeader([]string{
-			"Profile Name",
-		})
+		table.Options(tablewriter.WithBorders(tw.Border{Left: tw.On, Top: tw.On, Right: tw.On, Bottom: tw.On}))
+		table.Header("Profile Name")
 
 		for i := range c.Terraform {
 			data := []string{
