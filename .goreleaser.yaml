@@ -22,6 +22,7 @@ release:
 universal_binaries:
   - ids:
       - target
+    id: target
     replace: true
 
 homebrew_casks:
