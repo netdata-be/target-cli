@@ -39,5 +39,16 @@ homebrew_casks:
       email: wouter@netdata.be
     commit_msg_template: "Brew formula update for {{ .ProjectName }} version {{ .Tag }}"
     license: "MIT"
+archives:
+  - id: target
+    formats:
+      - tar.gz
+    format_overrides:
+      - goos: windows
+        formats:
+          - zip
+    files:
+      - contrib/p10k-target.zsh
+
 checksum:
   name_template: 'checksums.txt'

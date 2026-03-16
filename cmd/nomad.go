@@ -141,6 +141,7 @@ var nomadSetDefaultCmd = &cobra.Command{
 			exportCommandStr = append(exportCommandStr, "export NOMAD_CLI_NO_COLOR=true")
 		}
 
+		exportCommandStr = append(exportCommandStr, fmt.Sprintf("export TARGET_NOMAD_PROFILE=%s", args[0]))
 		commandStr := strings.Join(exportCommandStr, "; ")
 
 		defaultScript := `

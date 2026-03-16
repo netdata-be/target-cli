@@ -63,6 +63,7 @@ var terraformSetDefaultCmd = &cobra.Command{
 			exportCommandStr = append(exportCommandStr, shellCommandHttpProxy)
 		}
 
+		exportCommandStr = append(exportCommandStr, fmt.Sprintf("export TARGET_TERRAFORM_PROFILE=%s", args[0]))
 		commandStr := strings.Join(exportCommandStr, "; ")
 
 		defaultScript := `

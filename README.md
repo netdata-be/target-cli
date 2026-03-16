@@ -41,6 +41,8 @@ A context profile is a grouping of configuration parameters required to perform 
 eval $(target vault select prod)
 ```
 
+When you run `target ... select`, the command prints explicit `export` and `unset` statements so stale environment variables are removed. Always `eval` the output in your current shell to apply changes.
+
 ### Current Supported Tools
 
 - Terraform

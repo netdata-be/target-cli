@@ -6,7 +6,7 @@ import (
 	"github.com/netdata-be/target-cli/pkg/targetdir"
 	"os"
 	"reflect"
-
+	"sort"
 	"github.com/spf13/cobra"
 
 	homedir "github.com/mitchellh/go-homedir"
@@ -119,6 +119,22 @@ type Nomad struct {
 	NomadNoColor bool `json:"no_color,omitempty" mapstructure:"no_color"`
 }
 
+func addExportOrUnset(cmds *[]string, key string, value string) {
+	if value != "" {
+		*cmds = append(*cmds, fmt.Sprintf("export %s=%s", key, value))
+	} else {
+		*cmds = append(*cmds, fmt.Sprintf("unset %s", key))
+	}
+}
+
+func addExportBoolOrUnset(cmds *[]string, key string, enabled bool) {
+	if enabled {
+		*cmds = append(*cmds, fmt.Sprintf("export %s=true", key))
+	} else {
+		*cmds = append(*cmds, fmt.Sprintf("unset %s", key))
+	}
+}
+
 // Default struct with default profiles
 //type Default struct {
 //	VaultProfile     string `json:"vault_profile,omitempty" mapstracture:"vault_profile"`
@@ -198,13 +214,19 @@ var selectCmd = &cobra.Command{
 			}
 		}
 
-		// Print global proxies first
-		for key, value := range globalProxies {
-			fmt.Printf("export %s=%s\n", key, value)
+		// Print global proxies first in deterministic order
+		proxyKeys := make([]string, 0, len(globalProxies))
+		for key := range globalProxies {
+			proxyKeys = append(proxyKeys, key)
+		}
+		sort.Strings(proxyKeys)
+		for _, key := range proxyKeys {
+			fmt.Printf("export %s=%s\n", key, globalProxies[key])
 		}
 
 		// Vault
 		if c.Vault[profile] != nil {
+			fmt.Printf("export TARGET_VAULT_PROFILE=%s\n", profile)
 			context := c.Vault[profile]
 			exportCommands := []string{}
 
@@ -312,10 +334,8 @@ var selectCmd = &cobra.Command{
 
 			if context.CliNoColour != "" {
 				exportCommands = append(exportCommands, fmt.Sprintf("export VAULT_CLI_NO_COLOR=%s", context.CliNoColour))
-			} else if context.NoColor {
-				exportCommands = append(exportCommands, "export VAULT_CLI_NO_COLOR=true")
 			} else {
-				exportCommands = append(exportCommands, "unset VAULT_CLI_NO_COLOR")
+				addExportBoolOrUnset(&exportCommands, "VAULT_CLI_NO_COLOR", context.NoColor)
 			}
 
 			if context.RateLimit != "" {
@@ -355,6 +375,7 @@ var selectCmd = &cobra.Command{
 
 		// Boundary
 		if c.Boundary[profile] != nil {
+			fmt.Printf("export TARGET_BOUNDARY_PROFILE=%s\n", profile)
 			context := c.Boundary[profile]
 			exportCommands := []string{}
 
@@ -485,6 +506,7 @@ var selectCmd = &cobra.Command{
 
 		// Nomad
 		if c.Nomad[profile] != nil {
+			fmt.Printf("export TARGET_NOMAD_PROFILE=%s\n", profile)
 			context := c.Nomad[profile]
 			exportCommands := []string{}
 
@@ -561,6 +583,7 @@ var selectCmd = &cobra.Command{
 
 		// Consul
 		if c.Consul[profile] != nil {
+			fmt.Printf("export TARGET_CONSUL_PROFILE=%s\n", profile)
 			context := c.Consul[profile]
 			exportCommands := []string{}
 

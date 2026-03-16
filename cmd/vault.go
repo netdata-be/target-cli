@@ -234,6 +234,7 @@ var vaultSetDefaultCmd = &cobra.Command{
 			exportCommandStr = append(exportCommandStr, shellCommandDisableRedirects)
 		}
 
+		exportCommandStr = append(exportCommandStr, fmt.Sprintf("export TARGET_VAULT_PROFILE=%s", args[0]))
 		commandStr := strings.Join(exportCommandStr, "; ")
 
 		defaultScript := `
