@@ -24,9 +24,10 @@ universal_binaries:
       - target
     replace: true
 
-brews:
+homebrew_casks:
   -
     name: target
+    directory: Casks
     homepage: "https://github.com/netdata-be/target-cli"
     repository:
       owner: netdata-be
